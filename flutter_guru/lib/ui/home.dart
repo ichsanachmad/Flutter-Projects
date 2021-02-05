@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_guru/bloc/teacher/teacher_bloc.dart';
 import 'package:flutter_guru/bloc/teacher/teacher_event.dart';
 import 'package:flutter_guru/bloc/teacher/teacher_state.dart';
+import 'package:flutter_guru/ui/detail.dart';
 import 'package:flutter_guru/ui/insert.dart';
 import 'package:flutter_guru/widgets/list_item_teacher.dart';
 
@@ -56,7 +57,13 @@ class _HomeTeacherListState extends State<HomeTeacherList> {
         return ListView.builder(
             itemCount: state.teachers.length,
             itemBuilder: (context, index) {
-              return ListItemTeacher(teacher: state.teachers[index]);
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Detail.ROUTE,
+                      arguments: state.teachers[index]);
+                },
+                child: ListItemTeacher(teacher: state.teachers[index]),
+              );
             });
       }
 

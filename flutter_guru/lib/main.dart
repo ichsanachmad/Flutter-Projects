@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_guru/ui/detail.dart';
 import 'package:flutter_guru/ui/home.dart';
 import 'package:flutter_guru/ui/insert.dart';
 
@@ -7,7 +8,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,10 +17,30 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: Home.ROUTE,
-      routes: {
-        Home.ROUTE: (context) => Home(),
-        Insert.ROUTE: (context) => Insert()
-      },
+      onGenerateRoute: _onGenerateRoute,
+      routes: {},
     );
+  }
+
+  Route<dynamic> _onGenerateRoute(RouteSettings settings) {
+    WidgetBuilder _builder;
+    switch (settings.name) {
+      case Home.ROUTE:
+        _builder = (context) => Home();
+        break;
+
+      case Insert.ROUTE:
+        _builder = (context) => Insert();
+        break;
+
+      case Detail.ROUTE:
+        _builder = (context) => Detail(settings.arguments);
+        break;
+
+      default:
+        throw Exception('Invalid route: ${settings.name}');
+    }
+
+    return MaterialPageRoute(builder: _builder, settings: settings);
   }
 }
